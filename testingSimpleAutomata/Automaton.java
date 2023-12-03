@@ -22,7 +22,7 @@ public class Automaton {
     Automaton() {
         Scanner s = new Scanner(System.in);
 
-        System.out.println("number of symbols in the alphabet:");
+        System.out.println("\nnumber of symbols in the alphabet:");
         this.numOfAlphaSymbols = s.nextInt();
 
         System.out.println("total number of states:");
@@ -51,10 +51,9 @@ public class Automaton {
     }
 
     boolean test (String testString) {
-
         int currentState = 0;
         for (int i = 0 ; i < testString.length(); i++) {
-            char inputSymbol = testString.charAt(i);
+            int inputSymbol = Character.getNumericValue(testString.charAt(i));
             currentState = transitionTable[currentState][inputSymbol];
         }
         return FinalStates[currentState];
@@ -63,19 +62,19 @@ public class Automaton {
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
         Automaton A = new Automaton();
-        String ch = "n";
+        int ch = 0;
         do {
-            System.out.println("Input String:");
+            System.out.println("\nInput String:");
             String testString = s.next();
 
             if(A.test(testString))
-                System.out.println("Accepted");
+                System.out.println("\nAccepted\n");
             else
-                System.out.println("Rejected");
+                System.out.println("\nRejected\n");
 
-            System.out.println("Test One more input string? (y/n)");
-            ch = s.next();
-        } while (ch == "y");
+            System.out.println("Test One more input string? (1/0)");
+            ch = s.nextInt();
+        } while (ch == 1);
         s.close();
     }
 }
