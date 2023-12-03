@@ -22,13 +22,13 @@ public class Automaton {
     Automaton() {
         Scanner s = new Scanner(System.in);
 
-        System.out.println("Enter number of symbols in the alphabet:");
+        System.out.println("number of symbols in the alphabet:");
         this.numOfAlphaSymbols = s.nextInt();
 
-        System.out.println("Enter the total number of states:");
+        System.out.println("total number of states:");
         this.numOfStates = s.nextInt();
 
-        System.out.println("Input automata design in the form of trasition table (2D matrix)");
+        System.out.println("Trasition table (2D matrix)");
         System.out.printf("%s / %s  | 0 | 1 | 2 |...\n", "States", "Symbols");
         System.out.println("--------------------------------------");
         System.out.printf("%17s | _ | _ | _ |...\n", "q0");
@@ -39,7 +39,7 @@ public class Automaton {
             for (int j = 0; j < numOfAlphaSymbols; j++)
                 this.transitionTable[i][j] = s.nextInt();
 
-        System.out.println("Enter the number of final states:");
+        System.out.println("number of final states:");
         int nF = s.nextInt();
         this.FinalStates = new boolean[numOfStates];
         System.out.println("Enter the n final states q(_):");
@@ -47,11 +47,35 @@ public class Automaton {
             int fs = s.nextInt();
             this.FinalStates[fs] = true;
         }
-        s.close();
+        
+    }
+
+    boolean test (String testString) {
+
+        int currentState = 0;
+        for (int i = 0 ; i < testString.length(); i++) {
+            char inputSymbol = testString.charAt(i);
+            currentState = transitionTable[currentState][inputSymbol];
+        }
+        return FinalStates[currentState];
     }
 
     public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
         Automaton A = new Automaton();
+        String ch = "n";
+        do {
+            System.out.println("Input String:");
+            String testString = s.next();
 
+            if(A.test(testString))
+                System.out.println("Accepted");
+            else
+                System.out.println("Rejected");
+
+            System.out.println("Test One more input string? (y/n)");
+            ch = s.next();
+        } while (ch == "y");
+        s.close();
     }
 }
